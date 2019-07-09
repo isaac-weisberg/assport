@@ -5,21 +5,37 @@ fetch('./assdata.json')
         return res.json()
     })
     .then(data => {
-        for (const columnName in data) {
-            const cell = createCellWith(columnName)
+        const primeRow = "%%"
+        const firstKey = Object.keys(data)[0]
+        const keysInsideFirstKey = Object.keys(data[firstKey])
+        const rowKeysColumn = [primeRow].concat(keysInsideFirstKey)
+        const otherColumns = Object.keys(data)
+            .map(key => {
+                return Object.keys(data[key])
+                    .map(rowKey => {
+                        return data[key][rowKey]
+                    })
+            })
 
-            const columnObject = document.createElement('div')
-            columnObject.className = 'column'
-            columnObject.appendChild(cell)
-            root.appendChild(columnObject)
-
-            for (const row in data[columnName]) {
-                const cell = createCellWith(data[columnName][row])
+        const columns = [rowKeysColumn].concat(otherColumns)
+        return columns
+    })
+    .then(columns => {
+        for (const column of columns) {
+            const columnObject = createColumn()
+            for (const row of column) {
+                const cell = createCellWith(row)
                 columnObject.appendChild(cell)
             }
+            root.appendChild(columnObject)
         }
     })
 
+function createColumn() {
+    const columnObject = document.createElement('div')
+    columnObject.className = 'column'
+    return columnObject
+}
 
 function createCellWith(content) {
     const parent = document.createElement('div')
