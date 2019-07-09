@@ -11,10 +11,12 @@ fetch('./assdata.json')
         const rowKeysColumn = [primeRow].concat(keysInsideFirstKey)
         const otherColumns = Object.keys(data)
             .map(key => {
-                return Object.keys(data[key])
+                const values = Object.keys(data[key])
                     .map(rowKey => {
                         return data[key][rowKey]
                     })
+
+                return [key].concat(values)
             })
 
         const columns = [rowKeysColumn].concat(otherColumns)
