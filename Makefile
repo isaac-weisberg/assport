@@ -1,0 +1,2 @@
+open:
+	open ./assport.html
