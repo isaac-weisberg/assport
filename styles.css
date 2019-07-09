@@ -1,0 +1,13 @@
+.cell {
+    margin: 12px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+#root {
+    display: flex;
+    flex-direction: row;
+}
